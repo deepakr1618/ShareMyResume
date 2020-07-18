@@ -1,1 +1,1 @@
-### A platform to share your resume. Be it with your a friend, colleague or the employer.
+### A platform to share your resume. Be it with a friend, colleague or a potential employer.
