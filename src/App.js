@@ -1,24 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext, useEffect } from "react";
+import "./App.css";
+import { Route, Switch, Redirect } from "react-router-dom";
+import Login from "./components/login/login";
+import Register from "./components/register/Register";
+import Profiles from "./pages/profiles/Profiles";
+import Profile from "./pages/Profile/Profile";
+import Navigation from "./components/navigation/Navigation";
+import { Context } from "./state/reducer";
+import EditResume from "./pages/EditResume/EditResume";
+import { SetToken, SetId } from "./state/actions";
 
 function App() {
+  const [state, dispatch] = useContext(Context);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const id = localStorage.getItem("id");
+    if (token != "NONE" && id != "NONE") {
+      dispatch(SetToken(token));
+      dispatch(SetId(id));
+    }
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="app">
+      <header>
+        <Navigation></Navigation>{" "}
       </header>
+      <Route path="/users" exact>
+        <Profiles></Profiles>
+      </Route>
+      <Route path="/login">
+        <div style={{ height: "70px" }} />
+        <Login />
+      </Route>
+      <Route path="/register">
+        <div style={{ height: "70px" }} />
+        <Register />
+      </Route>
+      <Switch>
+        <Route path="/users/:id">
+          <Profile></Profile>
+        </Route>
+      </Switch>
+      <Route path="/edit">
+        {state.token ? <EditResume /> : <Redirect to="/login"></Redirect>}
+      </Route>
     </div>
   );
 }
