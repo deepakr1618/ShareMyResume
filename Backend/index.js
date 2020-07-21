@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 app.use(bodyparser.urlencoded({ extend: true }));
 app.use(express.json());
 mongoose.connect(
-  "mongodb+srv://root:originintern@cluster0.5e92q.mongodb.net/test?retryWrites=true&w=majority",
+  "mongodb+srv://root:<PASSWORD>@cluster0.5e92q.mongodb.net/test?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
